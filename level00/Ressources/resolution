@@ -1,0 +1,22 @@
+resolution level00:
+
+-> we check the list of all users : /etc/passwd
+flag00:x:3000:3000::/home/flag/flag00:/bin/bash
+
+-> we search for files which belong to the flag00 user
+find / -user flag00
+
+-> we find the following file
+----r--r-- 1 flag00 flag00 15 Mar  5  2016 /usr/sbin/john
+
+cat /usr/sbin/john
+cdiiddwpgswtgt
+
+-> if we apply the rot11 algorithm, we get the password for user flag00:
+nottoohardhere
+
+-> su flag00
+
+-> getflag
+
+Check flag.Here is your token : x24ti5gi3x0ol2eh4esiuxias
