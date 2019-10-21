@@ -3,6 +3,18 @@ resolution level02:
 -> we have a pcap file, we get a local copy:
 scp -P 2222 level02@127.0.0.1:level02.pcap level02.pcap
 
--> wireshark BLABLA
+-> we install wireshark on our ubuntu virtual machine
 
-7f is delete so we dddelete stuff
+-> we check the pcap file for a password
+
+-> if we look closely at packet number 43 we see: (right-click, follow TCP stream)
+"Password: ft_wandr...NDRel.L0L" in ASCII
+[50 61 73 73 77 6F 72 64 3A 20 66 74 5F 77 61 6E 64 72 7F 7F 7F 4E 44 52656C 7F 4C 30 4C] in hexadecimal
+7F in hex is the DEL character so we can deduce that the password is:
+ft_waNDReL0L
+
+-> su flag02
+
+-> getflag
+
+Check flag.Here is your token : kooda2puivaav1idi4f57q8iq
