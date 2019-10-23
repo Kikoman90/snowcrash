@@ -1,4 +1,4 @@
-resolution level02:
+solution level02:
 
 -> we have a pcap file, we get a local copy:
 scp -P 2222 level02@127.0.0.1:level02.pcap level02.pcap

