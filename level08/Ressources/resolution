@@ -1,0 +1,41 @@
+solution level08:
+
+> ls -la
+-rwsr-s---+ 1 flag08  level08 8617 Mar  5  2016 level08
+-rw-------  1 flag08  flag08    26 Mar  5  2016 token
+
+we do not have access to the token file as user level08
+
+> ./level08
+./level08 [file to read]
+
+it seems the program expects a file as parameter
+
+-> if we try to execute it with the token file we get:
+> ./level08 token
+"You may not access 'token'"
+
+-> we can get more info by using ltrace
+> ltrace ./level08 token
+...
+strstr("token", "token")                                   = "token"
+printf("You may not access '%s'\n", "token"You may not access 'token'
+)               = 27
+...
+
+the program will prevent us from using a file called "token"
+we have to look for a way to bypass this
+
+-> we can create a symbolic link in /tmp to the token file:
+> ln -s ~/token /tmp/flag
+
+> ./level08 /tmp/flag
+"quif5eloekouj29ke0vouxean"
+
+-> we now have the password for the flag08 user:
+
+> su flag08
+
+> getflag
+
+Check flag.Here is your token : 25749xKZ8L7DkSCwJkT9dyv6f

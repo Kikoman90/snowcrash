@@ -1,7 +1,7 @@
 solution level02:
 
 -> we have a pcap file, we get a local copy:
-scp -P 2222 level02@127.0.0.1:level02.pcap level02.pcap
+> scp -P 2222 level02@127.0.0.1:level02.pcap level02.pcap
 
 -> we install wireshark on our ubuntu virtual machine
 
@@ -13,8 +13,8 @@ scp -P 2222 level02@127.0.0.1:level02.pcap level02.pcap
 7F in hex is the DEL character so we can deduce that the password is:
 ft_waNDReL0L
 
--> su flag02
+> su flag02
 
--> getflag
+> getflag
 
 Check flag.Here is your token : kooda2puivaav1idi4f57q8iq
