@@ -1,7 +1,48 @@
 solution level09:
 
-> ls -la
+> ls -l
 -rwsr-sr-x 1 flag09  level09 7640 Mar  5  2016 level09
 ----r--r-- 1 flag09  level09   26 Mar  5  2016 token
 
+> cat token
+f4kmm6p|=�p�n��DB�Du{��
 
+it seems the token has been modified, in any way it does not work when we try to log as user flag09
+
+-> we examine the executable so as to understand its behaviour
+
+> ./level09
+"You need to provied only one arg."
+
+> ./level09 "toto"
+"tpvr"
+
+> ./level09 "abcdef"
+"acegik"
+
+we can see a pattern : a => a (+0), b => c (+1), c => e (+2), d => g (+3) etc.
+it seems the algorithm simply adds to each character the value of its index in the string
+
+-> we make the smart guess that the token we have has been through the algorithm already
+
+besides if we use ltrace we get a clue:
+> ltrace ./level09 token
+...
+puts("You should not reverse this"You should not reverse this
+...
+
+-> we will create a simple C script, whose behaviour is the reverse of the algorithm
+
+> gcc rev.c -o rev
+
+-> we run the script on the token and get the password for user flag09
+
+> scp -P 2222 level09@127.0.0.1:~/token .; chmod 755 token
+> ./rev `cat token`
+"f3iji1ju5yuevaus41q1afiuq"
+
+> su flag09
+
+> getflag
+
+Check flag.Here is your token : s5cAJpM8ev6XHw998pRWG728z

@@ -10,7 +10,7 @@ solution level05:
 
 this is a cron task -> the shell script openarenaserver will get executed every 2 minutes
 
-> ls -la /usr/sbin/openarenaserver
+> ls -l /usr/sbin/openarenaserver
 -rwxr-x---+ 1 flag05 flag05 94 Mar  5  2016 /usr/sbin/openarenaserver
 
 the + indicates that some special file permissions have been set

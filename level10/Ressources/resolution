@@ -1,0 +1,45 @@
+solution level10:
+
+> ls -l
+-rwsr-sr-x+ 1 flag10 level10 10817 Mar  5  2016 level10
+-rw-------  1 flag10 flag10     26 Mar  5  2016 token
+
+> ./level10
+"./level10 file host"
+"	sends file to host if you have access to it"
+
+if we try running the program with the token file:
+> ./level10 token 127.0.0.1
+You don't have access to token
+
+if we try running it with a file to which we have access:
+> touch /tmp/test; ./level10 /tmp/test 127.0.0.1
+Connecting to 127.0.0.1:6969 .. Unable to connect to host 127.0.0.1
+
+From this we can guess that:
+* the program takes 2 parameters: a file, and the host
+* apparently, it first checks if we have access to the file
+* it then tries to establish a connection to the host on port 6969
+
+-> we need a way to bypass the part that checks for file access, but still send the right file
+since the part of the program that checks for file access and the part that connects to the host
+are probably not executed at the same moment, we could potentially try to do something between the two operations
+
+-> we need to listen to port 6969 to get the output
+nc = netcat: utility used for operations involving TCP, UDP...
+
+> nc -lk 6969
+netcat is now listening on port 6969 for a connection
+
+-> we create two scripts that loop indefinitely:
+one executes the program with the file /tmp/token and host 127.0.0.1 (see script1.sh)
+the other creates a file, removes it, then symlinks /tmp/token to ~/token (see script2.sh)
+
+-> we execute both scripts and get the token thanks to the netcat tool
+"woupa2yuojeeaaed06riuj63c"
+
+> su flag10
+
+> getflag
+
+Check flag.Here is your token : feulo4b72j7edeahuete3no7c

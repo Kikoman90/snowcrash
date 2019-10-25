@@ -1,6 +1,6 @@
 solution level03:
 
-> ls -la
+> ls -l
 -rwsr-sr-x 1 flag03 level03 8627 Mar  5  2016 level03
 
 -> the owner of the program is the user flag03. the file permissions indicate that the setuid bit is set, so the program could run commands such as getflag
