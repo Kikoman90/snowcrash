@@ -1,0 +1,67 @@
+solution level14:
+
+-> the home folder is empty, and we cannot find any useful file or information anywhere
+
+-> therefore, we will examine the behaviour of the getflag command with gdb
+> gdb getflag
+> disassemble main
+Dump of assembler code for function main:
+...
+0x08048989 <+67>:	call   0x8048540 <ptrace@plt> #call to ptrace
+0x0804898e <+72>:	test   %eax,%eax
+0x08048990 <+74>:	jns    0x80489a8 <main+98> #first conditional jump
+...
+0x08048afd <+439>:	call   0x80484b0 <getuid@plt> #getuid method is called, result is stored in eax
+...
+# comparisons with flagXX UIDs
+...
+0x08048bb6 <+624>:	cmp    $0xbc6,%eax #0xbc6 = 3014 = flag14 UID
+0x08048bbb <+629>:	je     0x8048de5 <main+1183> #jump to token display
+...
+# the next part is responsible for printing the token
+0x08048de5 <+1183>:	mov    0x804b060,%eax
+0x08048dea <+1188>:	mov    %eax,%ebx
+0x08048dec <+1190>:	movl   $0x8049220,(%esp)
+0x08048df3 <+1197>:	call   0x8048604 <ft_des>
+0x08048df8 <+1202>:	mov    %ebx,0x4(%esp)
+0x08048dfc <+1206>:	mov    %eax,(%esp)
+0x08048dff <+1209>:	call   0x8048530 <fputs@plt>
+...
+End of assembler dump.
+
+-> we set a breakpoint before the first conditional jump 
+> (gdb) b *0x08048990
+
+-> we set another breakpoint before the comparison with flag14 UID
+> (gdb) b *0x08048bb6
+
+-> now we run the program
+> (gdb) run
+Starting program: /bin/getflag
+
+Breakpoint 1, 0x08048990 in main ()
+
+-> we jump to the second breakpoint
+> (gdb) jump *0x08048bb6
+Continuing at 0x8048bb6.
+
+Breakpoint 2, 0x08048bb6 in main ()
+
+-> now we can either set the eax register to the right value or jump to the token display instructions
+
+> (gdb) set $eax=3014
+> (gdb) c #continue
+Continuing.
+7QiHafiNa3HVozsaXkawuYrTstxbpABHD8CPnHJ
+
+or
+
+> (gdb) jump *0x08048de5
+Continuing at 0x8048de5.
+7QiHafiNa3HVozsaXkawuYrTstxbpABHD8CPnHJ
+
+> su flag14
+
+> getflag
+
+Check flag.Here is your token : 7QiHafiNa3HVozsaXkawuYrTstxbpABHD8CPnHJ
